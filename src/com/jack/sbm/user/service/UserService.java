@@ -1,5 +1,7 @@
 package com.jack.sbm.user.service;
 
-public interface UserService {
+import com.jack.sbm.user.bean.User;
 
+public interface UserService {
+public User doLogin(String userName ,String userPassword);
 }

@@ -2,7 +2,9 @@ package com.jack.sbm.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DBManager {
 	private static Connection con;
@@ -23,5 +25,15 @@ public static Connection getConnection(){
 	}
 	
 	return con;
+}
+public static void close(Statement statement,Connection connection){
+	try {
+		statement.close();
+		connection.close();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
 }
 }

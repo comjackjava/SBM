@@ -8,8 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class UserServlet extends HttpServlet {
+import com.jack.sbm.user.bean.User;
+import com.jack.sbm.user.service.UserService;
+import com.jack.sbm.user.service.impl.UserServiceImpl;
 
+public class UserServlet extends HttpServlet {
+private UserService userService =new UserServiceImpl();
+private User user=null;
 	/**
 	 * The doGet method of the servlet. <br>
 	 *
@@ -23,19 +28,7 @@ public class UserServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		out.println("<HTML>");
-		out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
-		out.println("  <BODY>");
-		out.print("    This is ");
-		out.print(this.getClass());
-		out.println(", using the GET method");
-		out.println("  </BODY>");
-		out.println("</HTML>");
-		out.flush();
-		out.close();
+		doPost(request, response);
 	}
 
 	/**
@@ -50,20 +43,33 @@ public class UserServlet extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String cmd=request.getParameter("cmd");
+		System.out.println(cmd);
+		switch (cmd) {
+		case "userlogin":
+			doLogin(request,response);
+			break;
 
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		out.println("<HTML>");
-		out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
-		out.println("  <BODY>");
-		out.print("    This is ");
-		out.print(this.getClass());
-		out.println(", using the POST method");
-		out.println("  </BODY>");
-		out.println("</HTML>");
-		out.flush();
-		out.close();
+		default:
+			break;
+		}
+		
+	}
+
+	private void doLogin(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		// TODO Auto-generated method stub
+		System.out.println("进入dologin方法");
+		String userName =request.getParameter("userName");
+		String userPassword=request.getParameter("userPassword");
+		user=userService.doLogin(userName, userPassword);
+		request.getSession().setAttribute("user", user);
+		if(user!=null){
+			response.sendRedirect("jsp/admin_index.jsp");
+		}else{
+			response.sendRedirect("index.jsp?loginMsg=failed");
+		}
+		
 	}
 
 }
