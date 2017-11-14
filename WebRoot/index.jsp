@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
+<%@taglib prefix="c" uri="core" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -22,11 +22,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 
 <body class="blue-style">
-
+<c:if test="${param.loginMsg == 'failed'}">
+<script type="text/javascript">
+alert("账户名或密码不正确");
+</script>
+</c:if>
 <div id="login">
 	<div class="icon"></div>
 	<div class="login-box">
-		<form method="post" action="user?cmd=userlogin">
+		<form method="post" action="user?cmd=userlogin" >
 			<dl>
 				<dt>用户名：</dt>
 				<dd><input type="text" name="userName" class="input-text" /></dd>

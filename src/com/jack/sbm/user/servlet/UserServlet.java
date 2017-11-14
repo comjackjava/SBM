@@ -2,6 +2,8 @@ package com.jack.sbm.user.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,8 +15,10 @@ import com.jack.sbm.user.service.UserService;
 import com.jack.sbm.user.service.impl.UserServiceImpl;
 
 public class UserServlet extends HttpServlet {
-private UserService userService =new UserServiceImpl();
+private Connection con;
+private UserService userService=new UserServiceImpl();
 private User user=null;
+
 	/**
 	 * The doGet method of the servlet. <br>
 	 *
@@ -28,7 +32,19 @@ private User user=null;
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		doPost(request, response);
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
+		out.println("<HTML>");
+		out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
+		out.println("  <BODY>");
+		out.print("    This is ");
+		out.print(this.getClass());
+		out.println(", using the GET method");
+		out.println("  </BODY>");
+		out.println("</HTML>");
+		out.flush();
+		out.close();
 	}
 
 	/**
@@ -43,6 +59,7 @@ private User user=null;
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		String cmd=request.getParameter("cmd");
 		System.out.println(cmd);
 		switch (cmd) {
