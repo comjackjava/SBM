@@ -5,6 +5,9 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +21,7 @@ public class UserServlet extends HttpServlet {
 private Connection con;
 private UserService userService=new UserServiceImpl();
 private User user=null;
+private Boolean login=false;
 
 	/**
 	 * The doGet method of the servlet. <br>
@@ -31,20 +35,7 @@ private User user=null;
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		out.println("<HTML>");
-		out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
-		out.println("  <BODY>");
-		out.print("    This is ");
-		out.print(this.getClass());
-		out.println(", using the GET method");
-		out.println("  </BODY>");
-		out.println("</HTML>");
-		out.flush();
-		out.close();
+			doPost(request, response);
 	}
 
 	/**
@@ -66,11 +57,23 @@ private User user=null;
 		case "userlogin":
 			doLogin(request,response);
 			break;
+		case "userexit":
+			doExit(request,response);
+			break;
 
 		default:
 			break;
 		}
 		
+	}
+
+	private void doExit(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// TODO Auto-generated method stub
+		request.getSession().invalidate();
+		String path = request.getContextPath();
+		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+		PrintWriter out=response.getWriter();
+		out.print("<script>window.top.location.href='"+basePath+"'</script>");
 	}
 
 	private void doLogin(HttpServletRequest request,
@@ -82,6 +85,17 @@ private User user=null;
 		user=userService.doLogin(userName, userPassword);
 		request.getSession().setAttribute("user", user);
 		if(user!=null){
+			request.getSession().setAttribute("user", user);
+			List<User>  online =(List<User>)request.getServletContext().getAttribute("online");
+			for (User userOnline : online) {
+				if(userOnline.getUserId()==user.getUserId()){
+					login=true;
+				}
+			}
+			if(!login){
+				online.add(user);
+				request.getServletContext().setAttribute("online", online);
+			}
 			response.sendRedirect("jsp/admin_index.jsp");
 		}else{
 			response.sendRedirect("index.jsp?loginMsg=failed");
