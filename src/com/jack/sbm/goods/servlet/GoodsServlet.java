@@ -3,13 +3,18 @@ package com.jack.sbm.goods.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class GoodsServlet extends HttpServlet {
+import com.jack.sbm.goods.bean.Goods;
+import com.jack.sbm.goods.service.GoodsService;
+import com.jack.sbm.goods.service.impl.GoodsServiceImpl;
 
+public class GoodsServlet extends HttpServlet {
+	private GoodsService goodsService = new GoodsServiceImpl();
 	/**
 	 * The doGet method of the servlet. <br>
 	 *
@@ -23,19 +28,8 @@ public class GoodsServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		out.println("<HTML>");
-		out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
-		out.println("  <BODY>");
-		out.print("    This is ");
-		out.print(this.getClass());
-		out.println(", using the GET method");
-		out.println("  </BODY>");
-		out.println("</HTML>");
-		out.flush();
-		out.close();
+		doPost(request, response);
+		
 	}
 
 	/**
@@ -51,19 +45,49 @@ public class GoodsServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		out.println("<HTML>");
-		out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
-		out.println("  <BODY>");
-		out.print("    This is ");
-		out.print(this.getClass());
-		out.println(", using the POST method");
-		out.println("  </BODY>");
-		out.println("</HTML>");
-		out.flush();
-		out.close();
+		String cmd = request.getParameter("cmd");
+		switch (cmd) {
+		case "getGoodsInfoByName":
+			getGoodsInfoByName(request, response);
+			break;
+		case "updateGoods":
+			updateGoods(request, response);
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	private void updateGoods(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		// TODO Auto-generated method stub
+		String businessNum = request.getParameter("businessNum");
+		Goods goods = (Goods) request.getAttribute("goods");
+		
+		int goodsNum = goods.getGoodsNum() + Integer.parseInt(businessNum);
+		int row = goodsService.updateGoods(goodsNum, goods.getGoodsId());
+		
+		if(row > 0){
+			//更新成功
+			response.sendRedirect("account?cmd=getPagebeanByParam&&p=1");
+		}else{
+			PrintWriter out = response.getWriter();
+			out.print("<script>alert('更新商品库存失败');</script>");
+		}
+	}
+
+	private void getGoodsInfoByName(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+String goodsName = request.getParameter("goodsName");
+		
+		Goods goods = goodsService.getGoodsInfoByName(goodsName);
+		
+		request.setAttribute("goods", goods);
+		
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("account?cmd=addAccount");
+		requestDispatcher.forward(request, response);
 	}
 
 }

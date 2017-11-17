@@ -12,6 +12,17 @@ public class Goods {
 	private String goodsUnit="";
 	private String goodsIntro="";
 	
+	public Goods(int goodsId, String goodsName, int goodsNum, float goodsPrice,
+			String goodsUnit, String goodsIntro) {
+		super();
+		this.goodsId = goodsId;
+		this.goodsName = goodsName;
+		this.goodsNum = goodsNum;
+		this.goodsPrice = goodsPrice;
+		this.goodsUnit = goodsUnit;
+		this.goodsIntro = goodsIntro;
+	}
+
 	public Goods() {
 		super();
 		// TODO Auto-generated constructor stub

@@ -13,6 +13,18 @@ public class Provider {
 	private String facsimile = "";
 	private String address = "";
 	
+	public Provider(int providerId, String providerName, String providerDetail,
+			String contact, String telephone, String facsimile, String address) {
+		super();
+		this.providerId = providerId;
+		this.providerName = providerName;
+		this.providerDetail = providerDetail;
+		this.contact = contact;
+		this.telephone = telephone;
+		this.facsimile = facsimile;
+		this.address = address;
+	}
+
 	public Provider() {
 		super();
 		// TODO Auto-generated constructor stub

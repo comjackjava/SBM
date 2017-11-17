@@ -83,7 +83,7 @@ private Boolean login=false;
 		String userName =request.getParameter("userName");
 		String userPassword=request.getParameter("userPassword");
 		user=userService.doLogin(userName, userPassword);
-		request.getSession().setAttribute("user", user);
+		
 		if(user!=null){
 			request.getSession().setAttribute("user", user);
 			List<User>  online =(List<User>)request.getServletContext().getAttribute("online");
@@ -96,7 +96,7 @@ private Boolean login=false;
 				online.add(user);
 				request.getServletContext().setAttribute("online", online);
 			}
-			response.sendRedirect("jsp/admin_index.jsp");
+			response.sendRedirect("account?cmd=getPagebeanByParam");
 		}else{
 			response.sendRedirect("index.jsp?loginMsg=failed");
 		}
