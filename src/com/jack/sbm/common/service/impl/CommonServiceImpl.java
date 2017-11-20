@@ -15,6 +15,16 @@ public class CommonServiceImpl implements CommonService {
 		return new CommonDaoImpl().getCount(p, isPayed, goodsName);
 	}
 
+	@Override
+	public PageBean getUserCount(int p, String userName) {
+		// TODO Auto-generated method stub
+		return new CommonDaoImpl().getUserCount(p, userName);
+	}
+
+
+
+
+
 
 
 

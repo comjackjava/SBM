@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.jack.sbm.account.service.AccountService;
 import com.jack.sbm.account.service.impl.AccountServiceImpl;
 import com.jack.sbm.common.bean.PageBean;
+import com.jack.sbm.common.bean.TopInfo;
 import com.jack.sbm.common.service.CommonService;
 import com.jack.sbm.common.service.impl.CommonServiceImpl;
 import com.jack.sbm.goods.bean.Goods;
@@ -135,18 +136,25 @@ private AccountService accountService=new AccountServiceImpl();
 			HttpServletResponse response) throws IOException {
 		// TODO Auto-generated method stub
 		PageBean pageBean =new PageBean();
+		
 		CommonService commonService =new CommonServiceImpl();
 		String p =request.getParameter("p");
 		String isPayed=request.getParameter("isPayed");
 		String  goodsName=request.getParameter("goodsName");
+		
 		if(p != null && p != ""){
+		TopInfo topInfo =new TopInfo(goodsName, isPayed);
 		 pageBean =(PageBean)commonService.getCount(Integer.parseInt(p), isPayed, goodsName);
-		 request.getSession().setAttribute("pageBean", pageBean);
+		 request.getSession().setAttribute("pageBeanAccount", pageBean);
+		 request.getSession().setAttribute("topInfo", topInfo);
+		 
 		PrintWriter out=response.getWriter();
 		out.print("<script>location.href='jsp/admin_bill_list.jsp'</script>");
 		}else{
+			TopInfo topInfo =new TopInfo(goodsName, "2");
 			pageBean =(PageBean)commonService.getCount(1, "2", goodsName);
-			request.getSession().setAttribute("pageBean", pageBean);
+			request.getSession().setAttribute("pageBeanAccount", pageBean);
+			 request.getSession().setAttribute("topInfo", topInfo);
 			response.sendRedirect("jsp/admin_index.jsp");
 		}
 	

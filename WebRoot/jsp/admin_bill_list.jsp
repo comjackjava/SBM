@@ -23,15 +23,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
   <link type="text/css" rel="stylesheet" href="jsp/css/style.css" />
 </head>
-<body>
+<body onload="fun()">
 
 <div class="menu">
 		<form id="formPagebean_top"  method="post" >
-		商品名称：<input type="text" name="goodsName" class="input-text" />&nbsp;&nbsp;&nbsp;&nbsp;
-		是否付款：<select name="isPayed">
-			<option value="2">请选择</option>
-			<option value="1">已付款</option>
-			<option value="0">未付款</option>
+		商品名称：<input type="text" name="goodsName" value="${topInfo.goodsName }"  class="input-text" />&nbsp;&nbsp;&nbsp;&nbsp;
+		是否付款：<select id="ops" name="isPayed" >
+			 <option  value="2" >请选择</option>
+		    <option value="1" >已付款</option>
+		     <option value="0" >未付款</option>
 		</select>&nbsp;&nbsp;&nbsp;&nbsp;
 		<input type="button" value="组合查询" onclick="getPagebeanByP_bill()" class="button"> 
 		</form>
@@ -53,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<td>商品描述</td>
 				<td>账单时间</td>
 			</tr>
-			<c:forEach items="${pageBean.data }" var="accountDetail">
+			<c:forEach items="${pageBeanAccount.data }" var="accountDetail">
 					<tr>
 						<td>${accountDetail.accountId }</td>
 						<td>${accountDetail.goodsName }</td>
@@ -77,7 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 
     		<label class="input-button">跳转到</label>
-    		<select id="pSelect" name="p" onchange="getPagebeanByP();">
+    		<select id="pSelect"  onchange="getPagebeanByP();">
     			<c:forEach var="i" begin="1" end="${pageBean.pageTotal }">
     				<c:if test="${pageBean.p == i }">
     					<option value="${i }" selected="selected">第${i }页</option>
@@ -94,8 +94,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 
 </div>
-
+	<input type="hidden" id="val" value="${topInfo.isPayed}">
 	 <script type="text/javascript">
+		function fun() {
+			var val=document.getElementById("val").value;
+			var ops=document.getElementById("ops");
+			for(var i=0;i<ops.length;i++){
+				if(ops.options[i].value==val){
+					ops.options[i].setAttribute("selected","true");
+				}
+			}
+			
+			
+		}
 		function getPagebeanByP() {
 			var formPagebean = document.getElementById("formPagebean_top");
 			var p=document.getElementById("pSelect").value;
@@ -120,5 +131,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 		
 	</script>
+	
 </body>
 </html>

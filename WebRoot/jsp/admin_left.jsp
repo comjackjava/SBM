@@ -28,7 +28,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<li><a href="jsp/admin_bill_list.jsp" target="mainFrame"><img src=""><img src="jsp/images/btn_bill.gif" /></a></li>
     <c:if test="${user.type==0}">
     	<li><a href="jsp/providerAdmin.jsp" target="mainFrame"><img src="jsp/images/btn_suppliers.gif" /></a></li>
-		<li><a href="jsp/userAdmin.jsp" target="mainFrame"><img src="jsp/images/btn_users.gif" /></a></li>
+		<li><a href="user?cmd=getUserCount" target="mainFrame"><img src="jsp/images/btn_users.gif" /></a></li>
     </c:if>
 	<li><a href="user?cmd=userexit" onClick="javaScript:alert('这里实现退出操作！')"><img src="jsp/images/btn_exit.gif" /></a></li>
 </ul>

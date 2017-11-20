@@ -15,7 +15,7 @@ public class User {
 	private String pic="";
 	private int type;
 	
-	public User(int userId, String userName, String userPassword,
+	public User( String userName, String userPassword,
 			String userSex, int userAge, String telephone, String address,
 			String pic, int type) {
 		super();
@@ -29,7 +29,20 @@ public class User {
 		this.pic = pic;
 		this.type = type;
 	}
-
+	public User( int userId,String userName, String userPassword,
+			String userSex, int userAge, String telephone, String address,
+			String pic, int type) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.userPassword = userPassword;
+		this.userSex = userSex;
+		this.userAge = userAge;
+		this.telephone = telephone;
+		this.address = address;
+		this.pic = pic;
+		this.type = type;
+	}
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub

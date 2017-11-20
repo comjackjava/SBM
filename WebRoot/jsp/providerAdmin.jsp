@@ -41,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								name="providerName" class="input-text" type="text">
 							&nbsp;&nbsp;&nbsp;&nbsp;供应商描述：<input name="providerDesc"
 								class="input-text" type="text">&nbsp;&nbsp;&nbsp;&nbsp;<input
-								value="组 合 查 询" type="submit">
+								value="组 合 查 询"  class="button" type="submit">
 						</form></td>
 				</tr>
 			</tbody>
