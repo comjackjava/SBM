@@ -24,6 +24,17 @@ public class Provider {
 		this.facsimile = facsimile;
 		this.address = address;
 	}
+	public Provider(String providerName, String providerDetail,
+			String contact, String telephone, String facsimile, String address) {
+		super();
+		this.providerId = providerId;
+		this.providerName = providerName;
+		this.providerDetail = providerDetail;
+		this.contact = contact;
+		this.telephone = telephone;
+		this.facsimile = facsimile;
+		this.address = address;
+	}
 
 	public Provider() {
 		super();

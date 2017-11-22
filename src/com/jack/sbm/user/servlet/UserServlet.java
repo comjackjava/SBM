@@ -15,12 +15,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.catalina.startup.SetAllPropertiesRule;
 import org.apache.tomcat.jni.File;
 
 import com.jack.sbm.common.bean.PageBean;
 import com.jack.sbm.common.dao.impl.CommonDaoImpl;
 import com.jack.sbm.common.service.CommonService;
 import com.jack.sbm.common.service.impl.CommonServiceImpl;
+import com.jack.sbm.provider.service.ProviderService;
 import com.jack.sbm.user.bean.User;
 import com.jack.sbm.user.service.UserService;
 import com.jack.sbm.user.service.impl.UserServiceImpl;
@@ -31,7 +33,6 @@ import com.jspsmart.upload.SmartUpload;
 import com.jspsmart.upload.SmartUploadException;
 
 public class UserServlet extends HttpServlet {
-private Connection con;
 private UserService userService=new UserServiceImpl();
 private CommonService commonService=new CommonServiceImpl();
 private User user=null;
@@ -74,6 +75,9 @@ private Boolean login=false;
 		case "userexit":
 			doExit(request,response);
 			break;
+		case "updatePwd":
+			updatePwd(request,response);
+			break;
 		case "uploadPic":
 			uploadPic(request, response);
 			break;
@@ -94,6 +98,25 @@ private Boolean login=false;
 			break;
 		default:
 			break;
+		}
+		
+	}
+
+	private void updatePwd(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		// TODO Auto-generated method stub
+		String pwd=request.getParameter("userPassword");
+		int userId=(int) request.getSession().getAttribute("userId");
+		int row =userService.updatePwd(userId, pwd);
+		if(row>0){
+			request.getSession().invalidate();
+			String path = request.getContextPath();
+			String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+			PrintWriter out=response.getWriter();
+			out.print("<script>window.top.location.href='"+basePath+"'</script>");
+		}else{
+			PrintWriter out = response.getWriter();
+			out.print("<script>alert('更新失败');</script>");
 		}
 		
 	}
@@ -287,6 +310,8 @@ String userId = request.getParameter("userId");
 		
 		if(user!=null){
 			request.getSession().setAttribute("user", user);
+			request.getSession().setAttribute("pwd", userPassword);
+			request.getSession().setAttribute("userId",user.getUserId());
 			List<User>  online =(List<User>)request.getServletContext().getAttribute("online");
 			for (User userOnline : online) {
 				if(userOnline.getUserId()==user.getUserId()){

@@ -16,4 +16,16 @@ public class ProviderServiceImpl implements ProviderService {
 		return new ProviderDaoImpl().getProvider();
 	}
 
+	@Override
+	public int updateProvider(Provider provider) {
+		// TODO Auto-generated method stub
+		return new ProviderDaoImpl().updateProvider(provider);
+	}
+
+	@Override
+	public int addProvider(Provider provider) {
+		// TODO Auto-generated method stub
+		return new ProviderDaoImpl().addProvider(provider);
+	}
+
 }

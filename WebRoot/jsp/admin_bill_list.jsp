@@ -52,6 +52,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<td>供应商名称</td>
 				<td>商品描述</td>
 				<td>账单时间</td>
+				<td>操作</td>
 			</tr>
 			<c:forEach items="${pageBeanAccount.data }" var="accountDetail">
 					<tr>
@@ -78,11 +79,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     		<label class="input-button">跳转到</label>
     		<select id="pSelect"  onchange="getPagebeanByP();">
-    			<c:forEach var="i" begin="1" end="${pageBean.pageTotal }">
-    				<c:if test="${pageBean.p == i }">
+    			<c:forEach var="i" begin="1" end="${pageBeanAccount.pageTotal }">
+    				<c:if test="${pageBeanAccount.p == i }">
     					<option value="${i }" selected="selected">第${i }页</option>
     				</c:if>
-    				<c:if test="${pageBean.p != i }">
+    				<c:if test="${pageBeanAccount.p != i }">
     					<option value="${i }">第${i }页</option>
     				</c:if>
     			</c:forEach>
@@ -121,12 +122,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		function getPagebeanByP_up() {
 			var formPagebean = document.getElementById("formPagebean_top");
-			formPagebean.setAttribute("action","account?cmd=getPagebeanByParam&p="+${pageBean.p - 1 });
+			formPagebean.setAttribute("action","account?cmd=getPagebeanByParam&p="+${pageBeanAccount.p - 1 });
 			formPagebean.submit();
 		}
 		function getPagebeanByP_down() {
 			var formPagebean = document.getElementById("formPagebean_top");
-			formPagebean.setAttribute("action","account?cmd=getPagebeanByParam&p="+${pageBean.p + 1 });
+			formPagebean.setAttribute("action","account?cmd=getPagebeanByParam&p="+${pageBeanAccount.p + 1 });
 			formPagebean.submit();
 		}
 		

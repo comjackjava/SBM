@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="optitle clearfix">
 			<div class="title">供应商管理&gt;&gt;</div>
 		</div>
-		<form id="form1" name="form1" method="post" action="provider.do"
+		<form id="form1" name="form1" method="post" action="provider?cmd=addProvider"
 			onsubmit="return checkit();">
 			<div class="content">
 				<font color="red"></font> <input name="flag" value="doAdd"
@@ -37,18 +37,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<tbody>
 						<tr>
 							<td class="field">供应商编号：</td>
-							<td><input name="proId" id="textfield" class="text"
+							<td><input name="providerId" id="textfield" class="text"
 								type="text"> <font color="red">*</font></td>
 						</tr>
 						<tr>
 							<td class="field">供应商名称：</td>
-							<td><input name="proName" id="textfield2" value=""
+							<td><input name="providerName" id="textfield2" value=""
 								class="text" type="text"> <font color="red">*</font></td>
 
 						</tr>
 						<tr>
 							<td class="field">供应商描述：</td>
-							<td><textarea name="proDesc" id="textarea" cols="45"
+							<td><textarea name="providerDetail" id="textarea" cols="45"
 									rows="5"></textarea></td>
 						</tr>
 						<tr>
@@ -59,13 +59,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</tr>
 						<tr>
 							<td class="field">供应商电话：</td>
-							<td><input name="phone" id="textfield2" value=""
+							<td><input name="telephone" id="textfield2" value=""
 								class="text" type="text"></td>
 						</tr>
 						<tr>
 							<td class="field">供应商传真：</td>
 
-							<td><input name="fax" id="textfield2" value="" class="text"
+							<td><input name="facsimile" id="textfield2" value="" class="text"
 								type="text"></td>
 						</tr>
 						<tr>
@@ -78,10 +78,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 
 			<div class="buttons">
-				<input name="button" id="button" value="提交" class="input-button"
-					type="submit"> <input name="button" id="button"
-					onclick="window.location='provider.do';" value="返回"
-					class="input-button" type="button">
+				<input type="submit" name="button" id="button" value="数据提交"
+					class="input-button" /> <input type="button" name="button"
+					id="button" onclick="history.back();" value="返回"
+					class="input-button" />
 			</div>
 		</form>
 	</div>

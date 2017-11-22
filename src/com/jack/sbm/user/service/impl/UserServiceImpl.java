@@ -37,5 +37,10 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return new UserDaoImpl().updateUser(userId, userName, userSex, userPassword, address, userAge, telephone, type);
 	}
+	@Override
+	public int updatePwd(int userId, String pwd) {
+		// TODO Auto-generated method stub
+		return new UserDaoImpl().updatePwd(userId, pwd) ;
+	}
 
 }

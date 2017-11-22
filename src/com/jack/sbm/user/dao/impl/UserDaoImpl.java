@@ -30,6 +30,7 @@ public class UserDaoImpl implements UserDao{
 			
 			if(rs.next()){
 				user =new User(
+						rs.getInt("userId"),
 						rs.getString("userName"),
 						userPassword, 
 						rs.getString("userSex"),
@@ -134,6 +135,23 @@ public class UserDaoImpl implements UserDao{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return 0;
+	}
+	@Override
+	public int updatePwd(int userId, String pwd) {
+		// TODO Auto-generated method stub
+		
+		try {
+			con=DBManager.getConnection();
+			String sql= "update tb_user set userPassword="+pwd+" where userId="+userId+" ";
+			ps=con.prepareStatement(sql);
+			System.out.println(sql);
+			return ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return 0;
 	}
 

@@ -42,5 +42,49 @@ private PreparedStatement ps;
 		}
 		return list;
 	}
+	@Override
+	public int updateProvider(Provider provider) {
+		// TODO Auto-generated method stub
+		try {
+			con=DBManager.getConnection();
+			String sql ="update  tb_provider set providerName=?,providerDetail=?,contact=?,telephone=?,facsimile=?,address=? where providerId=?";
+			ps=con.prepareStatement(sql);
+			
+			ps.setString(1, provider.getProviderName());
+			ps.setString(2, provider.getProviderDetail());
+			ps.setString(3, provider.getContact());
+			ps.setString(4, provider.getTelephone());
+			ps.setString(5, provider.getFacsimile());
+			ps.setString(6, provider.getAddress());
+			ps.setInt(7, provider.getProviderId());
+			return ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	@Override
+	public int addProvider(Provider provider) {
+		// TODO Auto-generated method stub
+		try {
+			con=DBManager.getConnection();
+			String sql ="insert into tb_provider values(?,?,?,?,?,?)";
+			ps=con.prepareStatement(sql);
+			ps.setString(1, provider.getProviderName());
+			ps.setString(2, provider.getProviderDetail());
+			ps.setString(3, provider.getContact());
+			ps.setString(4, provider.getTelephone());
+			ps.setString(5, provider.getFacsimile());
+			ps.setString(6, provider.getAddress());
+			return  ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
 
 }

@@ -28,7 +28,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div class="title"></div>
 	<div class="welcome">欢迎您：${user.userName}
 	&emsp;&emsp;&emsp;&emsp;&emsp;
-	<a href="">修改密码</a>
+	<a href="jsp/updatePwd.jsp" target="mainFrame">修改密码</a>
+	
 	&emsp;&emsp;&emsp;&emsp;&emsp;
 	<label>在线人数：${online.size()}</label>
 	</div>
